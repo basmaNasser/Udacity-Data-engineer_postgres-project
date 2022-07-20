@@ -6,8 +6,8 @@ This is Udacity Data Engineering nanodegree project 1, in this project need to c
 
 ## Fact Table
 
-songplays - records in log data associated with song plays i.e. records with page NextSong
-songplay_id, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent
+songplays - records in log data associated with song plays i.e. records with page NextSong \n
+songplay_id, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent \n
 
 ## Dimension Tables
 
