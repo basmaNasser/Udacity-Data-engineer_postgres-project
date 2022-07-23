@@ -5,6 +5,15 @@ import pandas as pd
 from sql_queries import *
 
 
+"""
+    This procedure processes a song file whose filepath has been provided as an arugment.
+    It extracts the song information in order to store it into the songs table.
+    Then it extracts the artist information in order to store it into the artists table.
+
+    INPUTS: 
+    * cur the cursor variable
+    * filepath the file path to the song file
+    """
 def process_song_file(cur, filepath):
     # open song file
     df = pd.read_json(filepath, lines=True)
@@ -20,6 +29,16 @@ def process_song_file(cur, filepath):
     cur.execute(artist_table_insert, artist_data)
 
 
+"""
+    This procedure processes a log files whose filepath has been provided as an arugment.
+    It extracts the log information in order to store it into the time and user tables.
+    filter NextSong action from logs
+    Then it extracts the log and user information in order to store it into the time and user tables.
+
+    INPUTS: 
+    * cur the cursor variable
+    * filepath the file path to the log file
+    """
 def process_log_file(cur, filepath):
     # open log file
     df = pd.read_json(filepath, lines=True)
@@ -61,6 +80,12 @@ def process_log_file(cur, filepath):
         songplay_data = [row.ts, row.userId, row.level, songid, artistid, row.sessionId, row.location, row.userAgent]
         cur.execute(songplay_table_insert, songplay_data)
 
+"""
+    This procedure processes get all files and iterate over them
+    
+    INPUTS: 
+    * files path
+    """
 
 def process_data(cur, conn, filepath, func):
     # get all files matching extension from directory
