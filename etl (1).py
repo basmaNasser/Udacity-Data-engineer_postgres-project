@@ -44,13 +44,13 @@ def process_log_file(cur, filepath):
     df = pd.read_json(filepath, lines=True)
 
     # filter by NextSong action
-    df = df.loc[df['page'] == 'NextSong']
+    df=df[df["page"]=='NextSong']
 
     # convert timestamp column to datetime
     t = pd.to_datetime(df['ts'], unit='ms')
     
     # insert time data records
-    time_data = (df.ts,t.dt.hour,t.dt.day,t.dt.weekofyear,t.dt.month,t.dt.year,t.dt.weekday_name)
+    time_data = (t,t.dt.hour,t.dt.day,t.dt.weekofyear,t.dt.month,t.dt.year,t.dt.weekday_name)
     column_labels = ('start_time', 'hour', 'day', 'week', 'month', 'year', 'weekday') 
     time_df = pd.DataFrame(dict(zip(column_labels, time_data)))
 
@@ -77,7 +77,8 @@ def process_log_file(cur, filepath):
             songid, artistid = None, None
 
         # insert songplay record
-        songplay_data = [row.ts, row.userId, row.level, songid, artistid, row.sessionId, row.location, row.userAgent]
+        ts=pd.to_datetime(row.ts, unit='ms')
+        songplay_data = [ts, row.userId, row.level, songid, artistid, row.sessionId, row.location, row.userAgent]
         cur.execute(songplay_table_insert, songplay_data)
 
 """
